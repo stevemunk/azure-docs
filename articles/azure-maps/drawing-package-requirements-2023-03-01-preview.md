@@ -105,8 +105,7 @@ No matter how many entity drawings are in the level perimeter layer, the result
 If the layer contains multiple overlapping Polylines, the Polylines are dissolved into a single Level feature. Instead, if the layer contains
 multiple nonoverlapping Polylines, the resulting Level feature has a multi-polygonal representation.
 
-You can see an example of the Level perimeter layer as the 'GROS$'
-layer in the [sample drawing package].
+You can see an example of the Level perimeter layer as the 'GROS$' layer in the [sample drawing package].
 
 ## Manifest file requirements
 
@@ -150,7 +149,7 @@ The next sections detail the requirements for each object.
 
 #### featureClass
 
-| Property               | Type                          | Required | Description                      |
+| Property               | Type                          | Required | Description                                 |
 |------------------------|-------------------------------|----------|---------------------------------------------|
 | `dwgLayers`            | Array of strings              | TRUE     | Names of layers that define the feature class. Each entity on the specified layer is converted to an instance of this feature class. The dwgLayer name that a feature is converted from ends up as a property of that feature. |
 | `featureClassName`     | String                        | TRUE     | Name of the feature class, for example, space or wall.|
