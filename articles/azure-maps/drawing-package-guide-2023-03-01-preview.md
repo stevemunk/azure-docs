@@ -1,0 +1,151 @@
+---
+title: Drawing package guide for Microsoft Azure Maps Creator
+titleSuffix: Microsoft Azure Maps Creator
+description: Learn how to prepare a drawing package for the Azure Maps Conversion service
+author: brendansco
+ms.author: Brendanc
+ms.date: 03/31/2023
+ms.topic: how-to
+ms.service: azure-maps
+services: azure-maps
+---
+
+# Conversion drawing package guide
+
+This guide shows you how to prepare your Drawing Package for the Azure Maps [Conversion service]. A Drawing Package contains one or more DWG drawing files for a single facility and a manifest file describing the DWG files.
+
+If you don't have your own package to reference along with this guide, you may download the [sample drawing package].
+
+You may choose any CAD software to open and prepare your facility drawing files. However, this guide is created using Autodesk's AutoCAD® software. Any commands referenced in this guide are meant to be executed using Autodesk's AutoCAD® software.  
+
+> [!TIP]
+> For more information about drawing package requirements that aren't covered in this guide, see [Drawing Package Requirements].
+
+## Glossary of terms
+
+For easy reference, here are some terms and definitions that are important as you read this guide.
+
+| Term    | Definition                                   |
+|:--------|:---------------------------------------------|
+| Layer   | An AutoCAD DWG layer from the drawing file.  |
+| Entity  | An AutoCAD DWG entity from the drawing file. |
+| Level   | An area of a building at a set elevation. For example, the floor of a building. |
+| Feature | An object that combines a geometry with more metadata information. |
+| Feature classes | A common blueprint for features. For example, a *unit* is a feature class, and an *office* is a feature. |
+
+## Step 1: DWG file requirements
+
+When preparing your facility drawing files for the Conversion service, make sure to follow these preliminary requirements and recommendations:
+
+* Facility drawing files must be saved in DWG format, which is the native file format for Autodesk's AutoCAD® software.
+* The Conversion service works with the AutoCAD DWG file format. AC1032 is the internal format version for the DWG files, and it's a good idea to select AC1032 for the internal DWG file format version.
+* A DWG file can only contain a single floor. A floor of a facility must be provided in its own separate DWG file.  So, if you have five floors in a facility, you must create five separate DWG files.
+
+## Step 2: Prepare the DWG files
+
+This part of the guide shows you how to use CAD commands to ensure that your DWG files meet the requirements of the Conversion service.
+
+You may choose any CAD software to open and prepare your facility drawing files. However, this guide is created using Autodesk's AutoCAD® software. Any commands referenced in this guide are meant to be executed using Autodesk's AutoCAD® software.  
+
+### Bind External References
+
+Each floor of a facility must be provided as one DWG file. If there are no external references, then nothing more needs to be done. However, if there are any external references, they must be bound to a single drawing. To bind an external reference, you may use the `XREF` command. After binding, each external reference drawing will be added as a block reference. If you need to make changes to any of these layers, remember to explode the block references by using the `XPLODE` command.
+
+### Unit of measurement
+
+The drawings can be created using any unit of measurement. However, all drawings must use the same unit of measurement. So, if one floor of the facility is using millimeters, then all other floors (drawings) must also be in millimeters. You can verify or modify the measurement unit by using the `UNITS` command and setting the “Insertion scale” value.
+
+The following image shows the **Drawing Units** window within Autodesk's AutoCAD® software that you can use to verify the unit of measurement.  
+
+:::image type="content" source="./media/drawing-package-guide/units.png" alt-text="Screenshot of the drawing units window in Autodesk's AutoCAD® software.":::
+
+### Alignment
+
+Each floor of a facility is provided as an individual DWG file. As a result, it's possible that the floors don't align perfectly, as required by the Azure Maps Conversion service. To verify alignment, use a reference point such as an elevator or column that spans multiple floors. Use the `XATTACH` command to load all floor drawings, then the `MOVE` command with the reference points to realign any floors that require it.
+
+### Layers
+
+Ensure that each layer of a drawing contains entities of one feature class. If a layer contains entities for walls, then it shouldn't have other entities such as units or doors.  However, a feature class can be split up over multiple layers. For example, you can have three layers in the drawing that contain wall entities.
+
+For a better understanding of layers and feature classes, see [Drawing Package Requirements].
+
+### Exterior layer
+
+An exterior layer is a required layer for every DWG file. A single level feature is created from each exterior layer or layers. This level feature defines the level's perimeter. It's important to ensure that the entities in the exterior layer meet the requirements of the layer. For example, a closed Polyline is supported; but an open Polyline isn't. If your exterior layer is made of multiple line segments, they must be provided as one closed Polyline. To join multiple line segments together, select all line segments and use the `JOIN` command.
+
+The following image is taken from the sample package, and shows the exterior layer of the facility in red. The unit layer is turned off to help with visualization.
+
+:::image type="content" source="./media/drawing-package-guide/exterior.png" alt-text="Screenshot showing the exterior layer of a facility in a drawing in Autodesk's AutoCAD® software.":::
+
+## Step 3: Prepare the manifest
+
+The drawing package Manifest is a JSON file. The Manifest tells the Azure Maps Conversion service how to read the facility DWG files and metadata. Some examples of this information could be the specific information each DWG layer contains, or the geographical location of the facility.
+
+To achieve a successful conversion, all “required” properties must be defined. A sample manifest file can be found inside the [sample drawing package]. This guide doesn't cover properties supported by the manifest. For more information about manifest properties, see  [Manifest File Properties].
+
+The manifest can be created manually in any text editor, or can be created using the Azure Maps Creator onboarding tool. This guide provides examples for each.
+
+### The Azure Maps Creator onboarding tool
+
+You can use the [Azure Maps Creator onboarding tool] to create new and edit existing [manifest files].
+
+To process the DWG files, enter the geography of your Azure Maps Creator resource, the subscription key of your Azure Maps account and the path and filename of the DWG ZIP package, the select **Process**. This process can take several minutes to complete.
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/create-manifest.png" alt-text="Screenshot showing the create a new manifest screen of the Azure Maps Creator onboarding tool.":::
+
+### Facility levels
+
+The facility level specifies which DWG file to use for which level. A level must have a level name and ordinal that describes that vertical order of each level in the facility, along with a **Vertical Extent** describing the height of each level in meters.
+
+The following example is taken from the [sample drawing package]. The facility has two levels: ground and level 2. The filename contains the full file name and path of the file relative to the manifest file within the drawing package.
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/facility-levels.png" alt-text="Screenshot showing the facility levels tab of the Azure Maps Creator onboarding tool.":::
+
+### DWG layers
+
+The `dwgLayers` object is used to specify the DWG layer names where feature classes can be found. To receive a properly converted facility, it's important to provide the correct layer names. For example, a DWG wall layer must be provided as a wall layer and not as a unit layer. The drawing can have other layers such as furniture or plumbing; but, the Azure Maps Conversion service ignores anything not specified in the manifest.
+Defining text properties enables you to associate text entities that fall inside the bounds of a feature. Once defined they can be used to style and display elements on your indoor map
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/dwg-layers.png" alt-text="Screenshot showing the create a new manifest screen of the onboarding tool.":::
+
+> [!IMPORTANT]
+> You must define the following layers in order to use wayfinding:
+>
+> 1. Walls
+> 2. Stairs
+> 3. Elevators
+
+### georeference
+
+The `georeference` object is used to specify where the facility is located geographically and how much to rotate the facility. The **Anchor Point Angle** is specified in degrees between true north and the drawing's vertical (Y) axis.
+
+The default value for each anchor point is zero (0):
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/georeference.png" alt-text="Screenshot showing the default settings in the georeference tab of the Azure Maps Creator onboarding tool. The default settings are zero for all anchor points including longitude, latitude and angle.":::
+
+You position the facility's location by entering either an address or longitude and latitude values:
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/georeference-location-defined.png" alt-text="Screenshot showing the georeference tab of the Azure Maps Creator onboarding tool with values entered for the longitude and latitude anchor points.":::
+
+### Review and download
+
+When finished, select the **Review + Download** button to view the manifest. When you finished verifying that it's ready, select the **Download** button to save it locally so that you can include it in the drawing package to import into your Azure Maps Creator resource.
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/review-download.png" alt-text="Screenshot showing the manifest JSON.":::
+
+## Step 4: Prepare the drawing package
+
+You should now have all the DWG drawings prepared to meet Azure Maps Conversion service requirements. A manifest file has also been created to help describe the facility. All files need to be compressed into a single archive file, with the `.zip` extension. It's important that the manifest file is named `manifest.json` and is placed in the root directory of the drawing package. All other files can be in any directory of the drawing package if the filename includes the relative path to the manifest. For an example of a drawing package, see the [sample drawing package].
+
+## Next steps
+
+> [!div class="nextstepaction"]
+> [Tutorial: Creating a Creator indoor map]
+
+[Conversion service]: /rest/api/maps/v2/conversion
+[sample drawing package]: https://github.com/Azure-Samples/am-creator-indoor-data-examples
+[Manifest File Properties]: drawing-requirements.md#manifest-file-requirements
+[Drawing Package Requirements]: drawing-requirements.md
+[Tutorial: Creating a Creator indoor map]: tutorial-creator-indoor-maps.md
+[Azure Maps Creator onboarding tool]: https://azure.github.io/azure-maps-creator-onboarding-tool
+[manifest files]: /azure/azure-maps/drawing-requirements#manifest-file-requirements

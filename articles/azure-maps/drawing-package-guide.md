@@ -60,19 +60,19 @@ Each floor of a facility must be provided as one DWG file. If there are no exter
 
 ### Unit of measurement
 
-The drawings can be created using any unit of measurement. However, all drawings must use the same unit of measurement. So, if one floor of the facility is using millimeters, then all other floors (drawings) must also be in millimeters. You can verify or modify the measurement unit by using the `UNITS` command.
+The drawings can be created using any unit of measurement. However, all drawings must use the same unit of measurement. So, if one floor of the facility is using millimeters, then all other floors (drawings) must also be in millimeters. You can verify or modify the measurement unit by using the `UNITS` command and setting the “Insertion scale” value.
 
-The following image shows the Drawing Units window within Autodesk's AutoCAD® software that you can use to verify the unit of measurement.  
+The following image shows the **Drawing Units** window within Autodesk's AutoCAD® software that you can use to verify the unit of measurement.  
 
 :::image type="content" source="./media/drawing-package-guide/units.png" alt-text="Screenshot of the drawing units window in Autodesk's AutoCAD® software.":::
 
 ### Alignment
 
-Each floor of a facility is provided as an individual DWG file. As a result, it's possible that the floors aren't perfectly aligned when stacked on top of each other. Azure Maps Conversion service requires that all drawings be aligned with the physical space. To verify alignment, use a reference point that can span across floors, such as an elevator or column that spans multiple floors. you can view all the floors by opening a new drawing, and then use the `XATTACH` command to load all floor drawings. If you need to fix any alignment issues, you can use the reference points and the `MOVE` command to realign the floors that require it.
+Each floor of a facility is provided as an individual DWG file. As a result, it's possible that the floors don't align perfectly, as required by the Azure Maps Conversion service. To verify alignment, use a reference point such as an elevator or column that spans multiple floors. Use the `XATTACH` command to load all floor drawings, then the `MOVE` command with the reference points to realign any floors that require it.
 
 ### Layers
 
-Ensure that each layer of a drawing contains entities of one feature class. If a layer contains entities for walls, then it can't have other features such as units or doors.  However, a feature class can be split up over multiple layers. For example, you can have three layers in the drawing that contain wall entities.
+Ensure that each layer of a drawing contains entities of one feature class. If a layer contains entities for walls, then it shouldn't have other entities such as units or doors.  However, a feature class can be split up over multiple layers. For example, you can have three layers in the drawing that contain wall entities.
 
 Furthermore, each layer has a list of supported entity types and any other types are ignored. For example, if the Unit Label layer only supports single-line text, a multiline text or Polyline on the same layer is ignored.
 
@@ -80,7 +80,7 @@ For a better understanding of layers and feature classes, see [Drawing Package R
 
 ### Exterior layer
 
-A single level feature is created from each exterior layer or layers. This level feature defines the level's perimeter. It's important to ensure that the entities in the exterior layer meet the requirements of the layer. For example, a closed Polyline is supported; but an open Polyline isn't. If your exterior layer is made of multiple line segments, they must be provided as one closed Polyline. To join multiple line segments together, select all line segments and use the `JOIN` command.
+An exterior layer is a required layer for every DWG file. A single level feature is created from each exterior layer or layers. This level feature defines the level's perimeter. It's important to ensure that the entities in the exterior layer meet the requirements of the layer. For example, a closed Polyline is supported; but an open Polyline isn't. If your exterior layer is made of multiple line segments, they must be provided as one closed Polyline. To join multiple line segments together, select all line segments and use the `JOIN` command.
 
 The following image is taken from the sample package, and shows the exterior layer of the facility in red. The unit layer is turned off to help with visualization.
 
@@ -218,7 +218,7 @@ The following snippet shows the unit property object that is associated with the
 
 ## Step 4: Prepare the Drawing Package
 
-You should now have all the DWG drawings prepared to meet Azure Maps Conversion service requirements. A manifest file has also been created to help describe the facility. All files will need to be zipped into a single archive file, with the `.zip` extension. It's important that the manifest file is named `manifest.json` and is placed in the root directory of the zipped package. All other files can be in any directory of the zipped package if the filename includes the relative path to the manifest. For an example of a drawing package, see the [sample drawing package].
+You should now have all the DWG drawings prepared to meet Azure Maps Conversion service requirements. A manifest file has also been created to help describe the facility. All files will need to be compressed into a single archive file, with the `.zip` extension. It's important that the manifest file is named `manifest.json` and is placed in the root directory of the drawing package. All other files can be in any directory of the drawing package if the filename includes the relative path to the manifest. For an example of a drawing package, see the [sample drawing package].
 
 ## Next steps
 
