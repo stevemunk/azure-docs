@@ -60,9 +60,9 @@ The Azure Maps Conversion service converts DWG file(s) of a facility to map data
 
 The Azure Maps Conversion service creates:
 
-- **Facility Feature**: The top-level feature of a facility that all levels of a facility are associated to.
+- **Facility Feature**: The top-level feature of a facility that all levels of a facility are associated to. This is defined as the **Exterior** property in the [Georeference] tab of the onboarding tool.
 - **Levels**: One Level feature is created for each floor of a facility. All features on a level are associated with a level.
-- **User defined features**: <!---    TBD: – [NEEDS SOME DESCRIPTION HERE]        ---->
+- **User defined features**: All elements defined as a [feature class name] in the onboarding tool. Includes things such as walls, rooms, and furniture. These appear as the  [featureClassProperties](#featureclass) in the manifest.
 
 ## DWG file requirements
 
@@ -123,7 +123,7 @@ Although there are requirements when you use the manifest objects, not all objec
 
 | Property       | Type                          | Required | Description                                                                              |
 |----------------|-------------------------------|----------|------------------------------------------------------------------------------------------|
-| `version`      | number                        | TRUE     | Manifest schema version. Currently, only version 2.0                                     |
+| `version`      | number                        | TRUE     | Manifest schema version. Currently version 2.0                                           |
 |`buildingLevels`| BuildingLevels object         | TRUE     | Specifies the levels of the buildings and the files containing the design of the levels. |
 |`featureClasses`| Array of featureClass objects | TRUE     | List of feature class objects that define how layers are read from the DWG drawing file. |
 | `georeference` | Georeference object           | FALSE    | Contains numerical geographic information for the facility drawing.                      |
@@ -136,22 +136,22 @@ The next sections detail the requirements for each object.
 | Property  | Type                   | Required | Description                                      |
 |-----------|------------------------|----------|--------------------------------------------------|
 |`dwgLayers`| Array of strings | TRUE | Names of layers that define the exterior building profile. |
-| `levels`  | Array of level objects | TRUE     | Determines the vertical order of levels.         |
+| `levels`  | Array of level objects | TRUE | A level refers to a unique floor in the facility defined in a DWG file, the height of each level and vertical order in which they appear. |
 
 #### level
 
-| Property       | Type    | Required | Description                                                                                                     |
-|----------------|---------|----------|-----------------------------------------------------------------------------------------------------------------|
-| `levelName`    | string  | TRUE  | Descriptive level name. For example: Floor 1, Lobby, Blue Parking, or Basement.                                    |
-| `ordinal`      | integer | TRUE  | Determines the vertical order of levels.                                                                           |
-| `filename`     | string  | TRUE  | File system path of the CAD drawing for a building level. It must be relative to the root of the drawing package.  |
-|`verticalExtent`| number  | FALSE | Floor-to-ceiling   height (thickness) of the level in meters.                                                      |
+| Property       | Type    | Required | Description                                                                              |
+|----------------|---------|----------|------------------------------------------------------------------------------------------|
+| `levelName`    | string  | TRUE  | The name of the level. For example: Floor 1, Lobby, Blue Parking, or Basement.              |
+| `ordinal`      | integer | TRUE  | Defines the vertical order of levels. The `ordinal` value must be unique within a facility. |
+| `filename`     | string  | TRUE  | The path and name of the DWG file representing the level in a facility. The path must be relative to the root of the drawing package.  |
+|`verticalExtent`| number  | FALSE | Floor-to-ceiling vertical height (thickness) of the level in meters.                        |
 
 #### featureClass
 
 | Property               | Type                          | Required | Description                                 |
 |------------------------|-------------------------------|----------|---------------------------------------------|
-| `dwgLayers`            | Array of strings              | TRUE     | Names of layers that define the feature class. Each entity on the specified layer is converted to an instance of this feature class. The dwgLayer name that a feature is converted from ends up as a property of that feature. |
+| `dwgLayers`            | Array of strings              | TRUE     | The names of every layer that defines a feature class. Each entity on the specified layer is converted to an instance of this feature class. The `dwgLayer` name that a feature is converted from ends up as a property of that feature. |
 | `featureClassName`     | String                        | TRUE     | Name of the feature class, for example, space or wall.|
 |`featureClassProperties`| Array of featureClassProperty | TRUE     | Specifies text layers in the DWG file associated to the feature as a property. For example, a label that falls inside the bounds of a space.|
 
@@ -159,7 +159,7 @@ The next sections detail the requirements for each object.
 
 | Property     | Type      | Required | Description                 |
 |--------------|-----------|----------|-----------------------------|
-| `dwgLayers` | Array of strings | TRUE | Names of layers that define the property. Each entity on the specified layer is converted to a property. Only TEXT and MTEXT entities are converted to a property, and all other entities are ignored.  |
+| `dwgLayers` | Array of strings | TRUE | Names of layers that define the property. Each entity on the specified layer is converted to a property. Only DWG `TEXT` and `MTEXT` entities are converted to a property, and all other entities are ignored.  |
 |`featureClassPropertyName`| String | TRUE | Name of the feature class property, for example, spaceName or spaceUseType.|
 
 #### georeference
@@ -175,9 +175,85 @@ The next sections detail the requirements for each object.
 The JSON in this example shows the manifest file for the sample drawing package. Go to the [Sample drawing package] for Azure Maps Creator on GitHub to download the entire package.
 
 #### Manifest file
-<!---    TBD: – [NEED UPDATED MANIFEST]        ---->
-```json
 
+```json
+{
+  "version": "2.0",
+  "buildingLevels": {
+    "dwgLayers": [
+      "GROS$"
+    ],
+    "levels": [
+      {
+        "filename": "Ground.dwg",
+        "levelName": "level 1",
+        "ordinal": 0
+      },
+      {
+        "filename": "Level_2.dwg",
+        "levelName": "level 2",
+        "ordinal": 1
+      }
+    ]
+  },
+  "georeference": {
+    "lat": 47.63529901,
+    "lon": -122.13355885,
+    "angle": 0
+  },
+  "featureClasses": [
+    {
+      "featureClassName": "room",
+      "dwgLayers": [
+        "RM$"
+      ],
+      "featureClassProperties": [
+        {
+          "featureClassPropertyName": "name",
+          "dwgLayers": [
+            "A-IDEN-NUMR-EXST"
+          ]
+        },
+        {
+          "featureClassPropertyName": "roomType",
+          "dwgLayers": [
+            "A-IDEN-NAME-EXST"
+          ]
+        }
+      ]
+    },
+    {
+      "featureClassName": "wall",
+      "dwgLayers": [
+        "A-WALL-EXST",
+        "A-WALL-CORE-EXST",
+        "A-GLAZ-SILL-EXST",
+        "A-GLAZ-SHEL-SILL-EXST",
+        "A-GLAZ-SHEL-EXST",
+        "A-GLAZ-EXST"
+      ]
+    },
+    {
+      "featureClassName": "workspace",
+      "dwgLayers": [
+        "A-BOMA"
+      ]
+    },
+    {
+      "featureClassName": "workspaceFurniture",
+      "dwgLayers": [
+        "A-FURN-SYTM-EXST"
+      ]
+    },
+    {
+      "featureClassName": "buildingFurniture",
+      "dwgLayers": [
+        "A-FURN-FREE-EXST"
+      ]
+    }
+  ],
+  "facilityName": "Contoso Building"
+}
 ```
 
 ## Next steps
@@ -197,3 +273,5 @@ Learn more by reading:
 [Conversion Drawing Package Guide]: drawing-package-guide.md
 [sample drawing package]: https://github.com/Azure-Samples/am-creator-indoor-data-examples
 [onboarding tool example]: drawing-package-guide-2023-03-01-preview.md#
+[feature class name]: drawing-package-guide-2023-03-01-preview.md#dwg-layers
+[Georeference]: drawing-package-guide-2023-03-01-preview.md#georeference
