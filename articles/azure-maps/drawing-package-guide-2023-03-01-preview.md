@@ -109,15 +109,15 @@ Defining text properties enables you to associate text entities that fall inside
 :::image type="content" source="./media/creator-indoor-maps/onboarding-tool/dwg-layers.png" alt-text="Screenshot showing the create a new manifest screen of the onboarding tool.":::
 
 > [!IMPORTANT]
-> You must define the following layers in order to use wayfinding:
+> You must define the following feature classes in order to use [wayfinding]:
 >
-> 1. Walls
-> 2. Stairs
-> 3. Elevators
+> 1. Wall
+> 2. Stair
+> 3. Elevator
 
 ### georeference
 
-The `georeference` object is used to specify where the facility is located geographically and how much to rotate the facility. The **Anchor Point Angle** is specified in degrees between true north and the drawing's vertical (Y) axis.
+Georeferencing is used to specify the location and rotation of the facility. The **Anchor Point Angle** is specified in degrees between true north and the drawing's vertical (Y) axis. The **Exterior** property is the top-level feature of the facility that all levels are associated with and defines the facilities exterior profile as it appears on the map.
 
 The default value for each anchor point is zero (0):
 
@@ -149,3 +149,4 @@ You should now have all the DWG drawings prepared to meet Azure Maps Conversion 
 [Tutorial: Creating a Creator indoor map]: tutorial-creator-indoor-maps.md
 [Azure Maps Creator onboarding tool]: https://azure.github.io/azure-maps-creator-onboarding-tool
 [manifest files]: /azure/azure-maps/drawing-requirements#manifest-file-requirements
+[wayfinding]: creator-indoor-maps.md#wayfinding-preview

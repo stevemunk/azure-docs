@@ -41,7 +41,7 @@ For easy reference, here are some terms and definitions that are important as yo
 | Layer | An AutoCAD DWG layer from the drawing file.                                                   |
 | Entity| An AutoCAD DWG entity from the drawing file.                                                  |
 | Xref  | A file in AutoCAD DWG file format, attached to the primary drawing as an external reference.  |
-| Level | An area of a building at a set elevation. For example, the floor of a building.               |
+| Level | An area of a facility at a set elevation. For example, the floor of a facility.               |
 |Feature| An instance of an object produced from the Conversion service that combines a geometry with metadata information. |
 |Feature classes| A common blueprint for features.                                                      |
 
@@ -121,21 +121,21 @@ Although there are requirements when you use the manifest objects, not all objec
 
 ### Manifest JSON file
 
-| Property       | Type                          | Required | Description                                                                              |
-|----------------|-------------------------------|----------|------------------------------------------------------------------------------------------|
-| `version`      | number                        | TRUE     | Manifest schema version. Currently version 2.0                                           |
-|`buildingLevels`| BuildingLevels object         | TRUE     | Specifies the levels of the buildings and the files containing the design of the levels. |
-|`featureClasses`| Array of featureClass objects | TRUE     | List of feature class objects that define how layers are read from the DWG drawing file. |
-| `georeference` | Georeference object           | FALSE    | Contains numerical geographic information for the facility drawing.                      |
-| `facilityName` | string                        | FALSE    | The name of the facility.                                                                |
+| Property       | Type                          | Required | Description                                                                             |
+|----------------|-------------------------------|----------|-----------------------------------------------------------------------------------------|
+| `version`      | number                        | TRUE     | Manifest schema version. Currently version 2.0                                          |
+|`buildingLevels`| [BuildingLevels] object       | TRUE     | Specifies the levels of the facility and the files containing the design of the levels. |
+|`featureClasses`|Array of [featureClass] objects| TRUE     | List of feature class objects that define how layers are read from the DWG drawing file.|
+| `georeference` |[Georeference](#georeference) object| FALSE | Contains numerical geographic information for the facility drawing.                   |
+| `facilityName` | string                        | FALSE    | The name of the facility.                                                               |
 
 The next sections detail the requirements for each object.
 
 #### buildingLevels
 
-| Property  | Type                   | Required | Description                                      |
-|-----------|------------------------|----------|--------------------------------------------------|
-|`dwgLayers`| Array of strings | TRUE | Names of layers that define the exterior building profile. |
+| Property  | Type                   | Required | Description                                             |
+|-----------|------------------------|----------|---------------------------------------------------------|
+|`dwgLayers`| Array of strings | TRUE | Names of layers that define the exterior profile of the facility. |
 | `levels`  | Array of level objects | TRUE | A level refers to a unique floor in the facility defined in a DWG file, the height of each level and vertical order in which they appear. |
 
 #### level
@@ -143,7 +143,7 @@ The next sections detail the requirements for each object.
 | Property       | Type    | Required | Description                                                                              |
 |----------------|---------|----------|------------------------------------------------------------------------------------------|
 | `levelName`    | string  | TRUE  | The name of the level. For example: Floor 1, Lobby, Blue Parking, or Basement.              |
-| `ordinal`      | integer | TRUE  | Defines the vertical order of levels. The `ordinal` value must be unique within a facility. |
+| `ordinal`      | integer | TRUE  | Defines the vertical order of levels. All `ordinal` values must be unique within a facility.|
 | `filename`     | string  | TRUE  | The path and name of the DWG file representing the level in a facility. The path must be relative to the root of the drawing package.  |
 |`verticalExtent`| number  | FALSE | Floor-to-ceiling vertical height (thickness) of the level in meters.                        |
 
@@ -151,15 +151,15 @@ The next sections detail the requirements for each object.
 
 | Property               | Type                          | Required | Description                                 |
 |------------------------|-------------------------------|----------|---------------------------------------------|
-| `dwgLayers`            | Array of strings              | TRUE     | The names of every layer that defines a feature class. Each entity on the specified layer is converted to an instance of this feature class. The `dwgLayer` name that a feature is converted from ends up as a property of that feature. |
-| `featureClassName`     | String                        | TRUE     | Name of the feature class, for example, space or wall.|
-|`featureClassProperties`| Array of featureClassProperty | TRUE     | Specifies text layers in the DWG file associated to the feature as a property. For example, a label that falls inside the bounds of a space.|
+| `dwgLayers`| Array of strings| TRUE| The name of each layer that defines the feature class. Each entity on the specified layer is converted to an instance of the feature class. The `dwgLayer` name that a feature is converted from ends up as a property of that feature. |
+| `featureClassName`     | String                        | TRUE     | The name of the feature class. Typical examples include room, workspace or wall.|
+|`featureClassProperties`| Array of [featureClassProperty] objects | TRUE | Specifies text layers in the DWG file associated to the feature as a property. For example, a label that falls inside the bounds of a space, such as a room number.|
 
 #### featureClassProperty
 
 | Property     | Type      | Required | Description                 |
 |--------------|-----------|----------|-----------------------------|
-| `dwgLayers` | Array of strings | TRUE | Names of layers that define the property. Each entity on the specified layer is converted to a property. Only DWG `TEXT` and `MTEXT` entities are converted to a property, and all other entities are ignored.  |
+| `dwgLayers` | Array of strings | TRUE | The name of each layer that defines the feature class property. Each entity on the specified layer is converted to a property. Only the DWG `TEXT` and `MTEXT` entities are converted to properties. All other entities are ignored.  |
 |`featureClassPropertyName`| String | TRUE | Name of the feature class property, for example, spaceName or spaceUseType.|
 
 #### georeference
@@ -275,3 +275,6 @@ Learn more by reading:
 [onboarding tool example]: drawing-package-guide-2023-03-01-preview.md#
 [feature class name]: drawing-package-guide-2023-03-01-preview.md#dwg-layers
 [Georeference]: drawing-package-guide-2023-03-01-preview.md#georeference
+[BuildingLevels]: #buildinglevels
+[featureClass]: #featureclass
+[featureClassProperty]: #featureclassproperty
