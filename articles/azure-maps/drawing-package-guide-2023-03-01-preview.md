@@ -117,13 +117,17 @@ Defining text properties enables you to associate text entities that fall inside
 
 ### georeference
 
-Georeferencing is used to specify the location and rotation of the facility. The **Anchor Point Angle** is specified in degrees between true north and the drawing's vertical (Y) axis. The **Exterior** property is the top-level feature of the facility that all levels are associated with and defines the facilities exterior profile as it appears on the map.
+Georeferencing is used to specify the exterior profile, location and rotation of the facility.
 
-The default value for each anchor point is zero (0):
+The [facility level] defines the exterior profile as it appears on the map and is selected from the list of DWG layers in the **Exterior** drop-down list.
+
+The **Anchor Point Longitude** and **Anchor Point Latitude** specify the facility's location, the default value is zero (0).
+
+The **Anchor Point Angle** is specified in degrees between true north and the drawing's vertical (Y) axis, the default value is zero (0).
 
 :::image type="content" source="./media/creator-indoor-maps/onboarding-tool/georeference.png" alt-text="Screenshot showing the default settings in the georeference tab of the Azure Maps Creator onboarding tool. The default settings are zero for all anchor points including longitude, latitude and angle.":::
 
-You position the facility's location by entering either an address or longitude and latitude values:
+You position the facility's location by entering either an address or longitude and latitude values. You can also pan the map to make minor adjustments to the facility's location.
 
 :::image type="content" source="./media/creator-indoor-maps/onboarding-tool/georeference-location-defined.png" alt-text="Screenshot showing the georeference tab of the Azure Maps Creator onboarding tool with values entered for the longitude and latitude anchor points.":::
 
@@ -150,3 +154,4 @@ You should now have all the DWG drawings prepared to meet Azure Maps Conversion 
 [Azure Maps Creator onboarding tool]: https://azure.github.io/azure-maps-creator-onboarding-tool
 [manifest files]: /azure/azure-maps/drawing-requirements#manifest-file-requirements
 [wayfinding]: creator-indoor-maps.md#wayfinding-preview
+[facility level]: drawing-package-requirements-2023-03-01-preview.md#facility-level

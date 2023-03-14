@@ -19,10 +19,8 @@ For a guide on how to prepare your drawing package, see [Conversion Drawing Pac
 
 ## Changes and Revisions
 
-The Facility 2.0 contains revisions for the Facility feature class definitions for Azure Maps Services.
-
-- Added a structure feature class to hold walls, columns, and so on.
-- Cleaned up the attributes designed to enrich routing scenarios. The current routing engine doesn't support them.~~
+- Added support for user defined feature classes.  
+- Simplified requirements of DWG layers.  
 
 ## Prerequisites
 
@@ -62,7 +60,8 @@ The Azure Maps Conversion service creates:
 
 - **Facility Feature**: The top-level feature of a facility that all levels of a facility are associated to. This is defined as the **Exterior** property in the [Georeference] tab of the onboarding tool.
 - **Levels**: One Level feature is created for each floor of a facility. All features on a level are associated with a level.
-- **User defined features**: All elements defined as a [feature class name] in the onboarding tool. Includes things such as walls, rooms, and furniture. These appear as the  [featureClassProperties](#featureclass) in the manifest.
+- **User defined features**: DWG layers are mapped to a user defined [feature class](#featureclass) and become instances of the feature class.
+- <!--DWG layers are mapped to a user defined [feature class](#featureclass). All mapped DWG layer entities become instances of the feature class.-->
 
 ## DWG file requirements
 
@@ -87,9 +86,11 @@ One or more DWG layer(s) can be mapped to a user defined feature class. One inst
 
 ### Feature class properties
 
-Text entities that fall within the bounds of a closed shape can be associated to that feature as a property. For example, a room feature class might have a room name and room type property as demonstrated in the [sample drawing package], shown in the [onboarding tool example].
+Text entities that fall within the bounds of a closed shape can be associated to that feature as a property. For example, a room feature class might have text that describes the room name and another the room type [sample drawing package]. Additionally:
 
-:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/dwg-layers-properties.png" alt-text="Screenshot showing the DWG layers tab of the onboarding tool with the name and room type properties of the room feature class highlighted.":::
+- Only TEXT and MTEXT entities will be associated to the feature as a property. All other entity types will be ignored.
+- TEXT and MTEXT justification point must fall within the bounds of the closed shape.
+- If more than one TEXT property is within the bounds of the closed shape and both are mapped to one property, one will randomly be selected.
 
 ### Facility level
 
