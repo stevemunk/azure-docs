@@ -59,7 +59,7 @@ The Azure Maps Conversion service converts DWG file(s) of a facility to map data
 The Azure Maps Conversion service creates:
 
 - **Facility Feature**: The top-level feature of a facility that all levels of a facility are associated to. This is defined as the **Exterior** property in the [Georeference] tab of the onboarding tool.
-- **Levels**: One Level feature is created for each floor of a facility. All features on a level are associated with a level.
+- **Level features**: One Level feature is created for each floor of a facility. All features on a level are associated with a level.
 - **User defined features**: DWG layers are mapped to a user defined [feature class](#featureclass) and become instances of the feature class.
 - <!--DWG layers are mapped to a user defined [feature class](#featureclass). All mapped DWG layer entities become instances of the feature class.-->
 
@@ -82,7 +82,7 @@ One or more DWG layer(s) can be mapped to a user defined feature class. One inst
 
 - All layers should be separated to represent different feature types of the facility.
 - All entities must fall inside the bounds of the level perimeter.
-- All AutoCAD entity types are supported.
+- The following AutoCAD entity types are supported: asdf, asdf, asdf, asdf
 
 ### Feature class properties
 
@@ -269,7 +269,7 @@ Learn more by reading:
 
 <!--    TBD: – NEED TO UPDATE LINKS TO THE NEW RELEASE OF THE CONVERSION SERVICE:  2023-03-01-preview    -->
 
-[Conversion service]: /rest/api/maps/v2/conversion
+[Conversion service]: https://aka.ms/creator-conversion
 [Drawing package]: https://github.com/Azure-Samples/am-creator-indoor-data-examples
 [Conversion Drawing Package Guide]: drawing-package-guide.md
 [sample drawing package]: https://github.com/Azure-Samples/am-creator-indoor-data-examples

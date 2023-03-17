@@ -65,17 +65,9 @@ Each floor of a facility is provided as an individual DWG file. As a result, it'
 
 ### Layers
 
-Ensure that each layer of a drawing contains entities of one feature class. If a layer contains entities for walls, then it shouldn't have other entities such as units or doors.  However, a feature class can be split up over multiple layers. For example, you can have three layers in the drawing that contain wall entities.
+Ensure that each layer of a drawing contains entities of one feature class. If a layer contains entities for walls, then it shouldn't have other entities such as units or doors.  However, a feature class can be composed of multiple layers. For example, you can have three layers in the drawing that contain wall entities.
 
 For a better understanding of layers and feature classes, see [Drawing Package Requirements].
-
-### Exterior layer
-
-An exterior layer is a required layer for every DWG file. A single level feature is created from each exterior layer or layers. This level feature defines the level's perimeter. It's important to ensure that the entities in the exterior layer meet the requirements of the layer. For example, a closed Polyline is supported; but an open Polyline isn't. If your exterior layer is made of multiple line segments, they must be provided as one closed Polyline. To join multiple line segments together, select all line segments and use the `JOIN` command.
-
-The following image is taken from the sample package, and shows the exterior layer of the facility in red. The unit layer is turned off to help with visualization.
-
-:::image type="content" source="./media/drawing-package-guide/exterior.png" alt-text="Screenshot showing the exterior layer of a facility in a drawing in Autodesk's AutoCAD® software.":::
 
 ## Step 3: Prepare the manifest
 
@@ -146,7 +138,7 @@ You should now have all the DWG drawings prepared to meet Azure Maps Conversion 
 > [!div class="nextstepaction"]
 > [Tutorial: Creating a Creator indoor map]
 
-[Conversion service]: /rest/api/maps/v2/conversion
+[Conversion service]: https://aka.ms/creator-conversion
 [sample drawing package]: https://github.com/Azure-Samples/am-creator-indoor-data-examples
 [Manifest File Properties]: drawing-requirements.md#manifest-file-requirements
 [Drawing Package Requirements]: drawing-requirements.md
