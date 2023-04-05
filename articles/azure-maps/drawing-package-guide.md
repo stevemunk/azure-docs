@@ -311,16 +311,25 @@ The following example is taken from the [sample drawing package v2]. The facilit
 ### DWG layers
 
 The `dwgLayers` object is used to specify the DWG layer names where feature classes can be found. To receive a properly converted facility, it's important to provide the correct layer names. For example, a DWG wall layer must be provided as a wall layer and not as a unit layer. The drawing can have other layers such as furniture or plumbing; but, the Azure Maps Conversion service ignores anything not specified in the manifest.
+
 Defining text properties enables you to associate text entities that fall inside the bounds of a feature. Once defined they can be used to style and display elements on your indoor map
 
 :::image type="content" source="./media/creator-indoor-maps/onboarding-tool/dwg-layers.png" alt-text="Screenshot showing the create a new manifest screen of the onboarding tool.":::
 
 > [!IMPORTANT]
-> Wayfinding support for `Drawing Package 2.0` will be available soon. The following feature class should be defined (not case sensitive) in order to use [wayfinding]. `Wall` will be treated as an obstruction for a given path request. `Stair` and `Elevator` will be treated as level connectors to navigate across floors:
+> Wayfinding support for `Drawing Package 2.0` will be available soon. The following three feature classes should be defined (not case sensitive) to enable [wayfinding]:
 >
 > 1. Wall
 > 2. Stair
 > 3. Elevator
+>
+> `Wall` is treated as an obstruction for a given path request. `Stair` and `Elevator` will be treated as level connectors to navigate between floors
+
+#### Name property
+
+If a feature has a `name` property that value will be rendered as the feature name by default, as demonstrated in the following image:
+
+:::image type="content" source="./media/creator-indoor-maps/onboarding-tool/name-property.png" alt-text="Screenshot showing an example of how the name property appears on an indoor map.":::
 
 ### georeference
 
