@@ -26,15 +26,15 @@ To create this non-interactive authentication flow, first create an Azure Functi
 
 To create a secured web service application that's responsible for authentication to Azure AD:
 
-1. Create a function in the Azure portal. For more information, see [Getting started with Azure Functions](../azure-functions/functions-get-started.md).
+1. Create a function in the Azure portal. For more information, see [Getting started with Azure Functions].
 
-2. Configure CORS policy on the Azure function to be accessible by the single-page web application. The CORS policy secures browser clients to the allowed origins of your web application. For more information, see [Add CORS functionality](../app-service/app-service-web-tutorial-rest-api.md#add-cors-functionality).
+2. Configure CORS policy on the Azure function to be accessible by the single-page web application. The CORS policy secures browser clients to the allowed origins of your web application. For more information, see [Add CORS functionality].
 
-3. [Add a system-assigned identity](../app-service/overview-managed-identity.md?tabs=dotnet#add-a-system-assigned-identity) on the Azure function to enable creation of a service principal to authenticate to Azure AD.  
+3. [Add a system-assigned identity] on the Azure function to enable creation of a service principal to authenticate to Azure AD.  
 
-4. Grant role-based access for the system-assigned identity to the Azure Maps account. For details, see [Grant role-based access](#grant-role-based-access-for-users-to-azure-maps).
+4. Grant role-based access for the system-assigned identity to the Azure Maps account. For more information, see [Grant role-based access].
 
-5. Write code for the Azure function to obtain Azure Maps access tokens using system-assigned identity with one of the supported mechanisms or the REST protocol. For more information, see [Obtain tokens for Azure resources](../app-service/overview-managed-identity.md?tabs=dotnet#add-a-system-assigned-identity)
+5. Write code for the Azure function to obtain Azure Maps access tokens using system-assigned identity with one of the supported mechanisms or the REST protocol. For more information, see [Obtain tokens for Azure resources].
 
     Here's an example REST protocol:
 
@@ -60,7 +60,7 @@ To create a secured web service application that's responsible for authenticatio
 
 6. Configure security for the Azure function HttpTrigger:
 
-   1. [Create a function access key](../azure-functions/functions-bindings-http-webhook-trigger.md?tabs=csharp#authorization-keys)
+   1. [Create a function access key]
    1. [Secure HTTP endpoint](../azure-functions/functions-bindings-http-webhook-trigger.md?tabs=csharp#secure-an-http-endpoint-in-production) for the Azure function in production.
 
 7. Configure a web application Azure Maps Web SDK.
@@ -111,3 +111,10 @@ Find the API usage metrics for your Azure Maps account:
 Explore other samples that show how to integrate Azure AD with Azure Maps:
 > [!div class="nextstepaction"]
 > [Azure Maps Samples](https://github.com/Azure-Samples/Azure-Maps-AzureAD-Samples/tree/master/src/ClientGrant)
+
+[Getting started with Azure Functions]: ../azure-functions/functions-get-started.md
+[Add CORS functionality]: ../app-service/app-service-web-tutorial-rest-api.md#add-cors-functionality
+[Add a system-assigned identity]: ../app-service/overview-managed-identity.md?tabs=dotnet#add-a-system-assigned-identity
+[Grant role-based access]: #grant-role-based-access-for-users-to-azure-maps
+[Obtain tokens for Azure resources]: ../app-service/overview-managed-identity.md?tabs=dotnet#add-a-system-assigned-identity
+[Create a function access key]: ../azure-functions/functions-bindings-http-webhook-trigger.md?tabs=csharp#authorization-keys
