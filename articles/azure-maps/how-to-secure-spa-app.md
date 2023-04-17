@@ -13,13 +13,13 @@ ms.custom: devx-track-js, subject-rbac-steps
 
 # How to secure a single-page web application with non-interactive sign-in
 
-This article describes how to secure a single-page web application with Azure Active Directory (Azure AD), when the user isn't able to sign in to Azure AD.
+Secure a single-page web application with Azure Active Directory (Azure AD), even when the user isn't able to sign in to Azure AD.
 
-To create this non-interactive authentication flow, we'll create an Azure Function secure web service that's responsible for acquiring access tokens from Azure AD. This web service will be exclusively available only to your single-page web application.
+To create this non-interactive authentication flow, first create an Azure Function secure web service that's responsible for acquiring access tokens from Azure AD. This web service is exclusively available only to your single-page web application.
 
 [!INCLUDE [authentication details](./includes/view-authentication-details.md)]
 
-> [!Tip]
+> [!TIP]
 > Azure Maps can support access tokens from user sign-on or interactive flows. You can use interactive flows for a more restricted scope of access revocation and secret management.
 
 ## Create an Azure function
