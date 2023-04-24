@@ -23,20 +23,20 @@ When you create an indoor map using Azure Maps Creator, default styles are appli
 - [Subscription key](quick-demo-map-app.md#get-the-subscription-key-for-your-account).
 - [Map configuration][mapConfiguration] alias or ID. If you have never used Azure Maps Creator to create an indoor map, you might find the [Use Creator to create indoor maps][tutorial] tutorial helpful.
 
-You'll need the map configuration `alias` (or `mapConfigurationId`) to render indoor maps with custom styles via the Azure Maps Indoor Maps module.
+The map configuration `alias` (or `mapConfigurationId`) is required to render indoor maps with custom styles via the Azure Maps Indoor Maps module.
 
 ## Embed the Indoor Maps module
 
 You can install and embed the *Azure Maps Indoor* module in one of two ways.
 
-To use the globally hosted Azure Content Delivery Network version of the *Azure Maps Indoor* module, reference the following JavaScript and Style Sheet references in the `<head>` element of the HTML file:
+To use the globally hosted Azure Content Delivery Network version of the *Azure Maps Indoor* module, reference the following `script` and `stylesheet` references in the `<head>` element of the HTML file:
 
 ```html
 <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/indoor/0.2/atlas-indoor.min.css" type="text/css"/>
 <script src="https://atlas.microsoft.com/sdk/javascript/indoor/0.2/atlas-indoor.min.js"></script>
 ```
 
- Or, you can download the *Azure Maps Indoor* module. The *Azure Maps Indoor* module contains a client library for accessing Azure Maps services. Follow the steps below to install and load the *Indoor* module into your web application.  
+ Or, you can download the *Azure Maps Indoor* module. The *Azure Maps Indoor* module contains a client library for accessing Azure Maps services. The following steps demonstrate how to install and load the *Indoor* module into your web application.  
   
   1. Install the latest [azure-maps-indoor package](https://www.npmjs.com/package/azure-maps-indoor).
   
@@ -61,7 +61,7 @@ For more information, see [Azure Maps service geographic scope][geos].
 
 Next, instantiate a *Map object* with the map configuration object set to the `alias` or `mapConfigurationId` property of your map configuration, then set your `styleAPIVersion` to `2022-09-01-preview`.
 
-The *Map object* will be used in the next step to instantiate the *Indoor Manager* object. The code below shows you how to instantiate the *Map object* with `mapConfiguration`, `styleAPIVersion` and map domain set:
+The *Map object* will be used in the next step to instantiate the *Indoor Manager* object. The following code shows you how to instantiate the *Map object* with `mapConfiguration`, `styleAPIVersion` and map domain set:
 
 ```javascript
 const subscriptionKey = "<Your Azure Maps Subscription Key>";
@@ -86,7 +86,7 @@ const map = new atlas.Map("map-id", {
 
 ## Instantiate the Indoor Manager
 
-To load the indoor map style of the tiles, you must instantiate the *Indoor Manager*. Instantiate the *Indoor Manager* by providing the *Map object*. If you wish to support [dynamic map styling](indoor-map-dynamic-styling.md), you must pass the `statesetId`. The `statesetId` variable name is case-sensitive. Your code should like the JavaScript below.
+To load the indoor map style of the tiles, you must instantiate the *Indoor Manager*. Instantiate the *Indoor Manager* by providing the *Map object*. If you wish to support [dynamic map styling](indoor-map-dynamic-styling.md), you must pass the `statesetId`. The `statesetId` variable name is case-sensitive. Your code should look like the following JavaScript code snippet:
 
 ```javascriptf
 const statesetId = "<statesetId>";
@@ -96,7 +96,7 @@ const indoorManager = new atlas.indoor.IndoorManager(map, {
 });
 ```
 
-To enable polling of state data you provide, you must provide the `statesetId` and call `indoorManager.setDynamicStyling(true)`. Polling state data lets you dynamically update the state of dynamic properties or *states*. For example, a feature such as room can have a dynamic property (*state*) called `occupancy`. Your application may wish to poll for any *state* changes to reflect the change inside the visual map. The code below shows you how to enable state polling:
+To enable polling of state data you provide, you must provide the `statesetId` and call `indoorManager.setDynamicStyling(true)`. Polling state data lets you dynamically update the state of dynamic properties or *states*. For example, a feature such as room can have a dynamic property (*state*) called `occupancy`. Your application may wish to poll for any *state* changes to reflect the change inside the visual map. The following code shows you how to enable state polling:
 
 ```javascript
 const statesetId = "<statesetId>";
@@ -137,7 +137,7 @@ map.events.add("facilitychanged", indoorManager, (eventData) => {
 });
 ```
 
-The `eventData` variable holds information about the level or facility that invoked the `levelchanged` or `facilitychanged` event, respectively. When a level changes, the `eventData` object will contain the `facilityId`, the new `levelNumber`, and other metadata. When a facility changes, the `eventData` object will contain the new `facilityId`, the new `levelNumber`, and other metadata.
+The `eventData` variable holds information about the level or facility that invoked the `levelchanged` or `facilitychanged` event, respectively. When a level changes, the `eventData` object contains the `facilityId`, the new `levelNumber`, and other metadata. When a facility changes, the `eventData` object contains the new `facilityId`, the new `levelNumber`, and other metadata.
 
 ## Example: custom styling: consume map configuration in WebSDK (preview)
 
@@ -158,7 +158,7 @@ When you create an indoor map using Azure Maps Creator, default styles are appli
     - `center` defines a latitude and longitude for your indoor map center location. Provide a value for `center` if you don't want to provide a value for `bounds`. Format should appear as `center`: [-122.13315, 47.63637].
     - `bounds` is the smallest rectangular shape that encloses the tileset map data. Set a value for `bounds` if you don't want to set a value for `center`. You can find your map bounds by calling the [Tileset List API](/rest/api/maps/v2/tileset/list). The Tileset List API returns the `bbox`, which you can parse and assign to `bounds`. Format should appear as `bounds`: [# west, # south, # east, # north].
     - `mapConfiguration` the ID or alias of the map configuration that defines the custom styles you want to display on the map, use the map configuration ID or alias from step 1.
-    - `style` allows you to set the initial style from your map configuration that will be displayed, if unset, the style matching map configuration's default configuration will be used.
+    - `style` allows you to set the initial style from your map configuration that is displayed. If not set, the style matching map configuration's default configuration is used.
     - `zoom` allows you to specify the min and max zoom levels for your map.
     - `styleAPIVersion`: pass **'2022-09-01-preview'** (which is required while Custom Styling is in public preview)
 
@@ -169,7 +169,7 @@ When you create an indoor map using Azure Maps Creator, default styles are appli
 > [!TIP]
 > The map configuration is referenced using the `mapConfigurationId` or `alias` . Each time you edit or change a map configuration, its ID changes but its alias remains the same. It is recommended to reference the map configuration by its alias in your applications. For more information, See [map configuration](creator-indoor-maps.md#map-configuration) in the concepts article.
 
-Your file should now look similar to the HTML below.
+Your file should now look similar to the following HTML:
 
   ```html
   <!DOCTYPE html>
@@ -251,7 +251,7 @@ Your file should now look similar to the HTML below.
   </html>
   ```
 
-To see your indoor map, load it into a web browser. It should appear like the image below. If you click on the stairwell feature, the *level picker* will appear in the upper right-hand corner.
+To see your indoor map, load it into a web browser. It should appear like the following image. If you select the stairwell feature, the *level picker* appears in the upper right-hand corner.
 
   ![indoor map image](media/how-to-use-indoor-module/indoor-map-graphic.png)
 
