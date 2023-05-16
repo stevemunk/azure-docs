@@ -72,7 +72,116 @@ For a complete working sample of how to create a custom SVG template and use it 
 
 ## Add a CSS styled HTML marker
 
-One of the benefits of HTML markers is that there are many great customizations that can be achieved using CSS. In this sample, the content of the HtmlMarker consists of HTML and CSS that create an animated pin that drops into place and pulses.
+One of the benefits of HTML markers is that there are many great customizations that can be achieved using CSS. In the following sample, the content of the HtmlMarker consists of HTML and CSS that create an animated pin that drops into place and pulses.
+
+```javascript
+//Wait until the map resources are ready.
+map.events.add('ready', function () {
+    //Create a HTML marker and add it to the map.
+    map.markers.add(new atlas.HtmlMarker({
+        htmlContent: "<div><div class='pin bounce'></div><div class='pulse'></div></div>",
+        position: [-0.1406, 51.5018],
+        pixelOffset: [5, -18]
+    }));
+});
+```
+
+The CSS:
+
+```css
+    <style>
+        .pin {
+            width: 30px;
+            height: 30px;
+            border-radius: 50% 50% 50% 0;
+            background: #00cae9;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -20px 0 0 -20px;
+        }
+
+            .pin:after {
+                content: "";
+                width: 14px;
+                height: 14px;
+                margin: 8px 0 0 8px;
+                background: #e6e6e6;
+                position: absolute;
+                border-radius: 50%;
+            }
+
+        .bounce {
+            animation-name: bounce;
+            animation-fill-mode: both;
+            animation-duration: 1s;
+        }
+
+        .pulse {
+            background: #d6d4d4;
+            border-radius: 50%;
+            height: 14px;
+            width: 14px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: 11px 0px 0px -12px;
+            transform: rotateX(55deg);
+            z-index: -2;
+        }
+
+            .pulse:after {
+                content: "";
+                border-radius: 50%;
+                height: 40px;
+                width: 40px;
+                position: absolute;
+                margin: -13px 0 0 -13px;
+                animation: pulsate 1s ease-out;
+                animation-iteration-count: infinite;
+                opacity: 0;
+                box-shadow: 0 0 1px 2px #00cae9;
+                animation-delay: 1.1s;
+            }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(0.1, 0.1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.2, 1.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-2000px) rotate(-45deg);
+            }
+
+            60% {
+                opacity: 1;
+                transform: translateY(30px) rotate(-45deg);
+            }
+
+            80% {
+                transform: translateY(-10px) rotate(-45deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(-45deg);
+            }
+        }
+    </style>
+```
 
 For a complete working sample of how to use CSS and HTML to create a marker on the map, see [CSS Styled HTML Marker] in the [Azure Maps Samples].
 
@@ -82,7 +191,6 @@ For a complete working sample of how to use CSS and HTML to create a marker on t
 <iframe height='500' scrolling='no' title='HTML DataSource' src='//codepen.io/azuremaps/embed/qJVgMx/?height=500&theme-id=0&default-tab=js,result&embed-version=2&editable=true' frameborder='no' loading="lazy" allowtransparency='true' allowfullscreen='true'>See the Pen <a href='https://codepen.io/azuremaps/pen/qJVgMx/'>HTML DataSource</a> by Azure Maps (<a href='https://codepen.io/azuremaps'>@azuremaps</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 -------------------------------------------------------------------->
-
 
 ## Draggable HTML markers
 
