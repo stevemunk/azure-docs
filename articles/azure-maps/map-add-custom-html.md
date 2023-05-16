@@ -58,10 +58,14 @@ For a complete working sample of how to add an HTML marker, see [Simple HTML Mar
 
 The default `htmlContent` of an Html marker is an SVG template with place folders `{color}` and `{text}` in it. You can create custom SVG strings and add these same placeholders into your SVG such that setting the `color` and `text` options of the marker update these placeholders in your SVG.
 
-<br/>
+For a complete working sample of how to create a custom SVG template and use it with the HtmlMarker class, see [HTML Marker with Custom SVG Template] in the [Azure Maps Samples]. When running this sample, select the button in the upper left hand side of the window labeled **Update Marker Options** to change the `color` and `text` options from the SVG template used in the HtmlMarker.
 
+:::image type="content" source="./media/map-add-custom-html/html-marker-with-custom-svg-template.png" alt-text="Screenshot showing a map of the world with a custom SVG template used with the HtmlMarker class and a button labeled update marker options, that when selected changes the color and text options from the SVG template used in the HtmlMarker. ":::
+
+<!-------------------------------------------------------------------
 <iframe height='500' scrolling='no' title='HTML Marker with Custom SVG Template' src='//codepen.io/azuremaps/embed/LXqMWx/?height=500&theme-id=0&default-tab=js,result&embed-version=2&editable=true' frameborder='no' loading="lazy" allowtransparency='true' allowfullscreen='true'>See the Pen <a href='https://codepen.io/azuremaps/pen/LXqMWx/'>HTML Marker with Custom SVG Template</a> by Azure Maps (<a href='https://codepen.io/azuremaps'>@azuremaps</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
+-------------------------------------------------------------------->
 
 > [!TIP]
 > The Azure Maps web SDK provides several SVG image templates that can be used with HTML markers. For more information, see the [How to use image templates](how-to-use-image-templates-web-sdk.md) document.
@@ -119,4 +123,4 @@ For more code examples to add to your maps, see the following articles:
 
 [Simple HTML Marker]: https://samples.azuremaps.com/?search=HTML%20marker&sample=simple-html-marker
 [Azure Maps Samples]: https://samples.azuremaps.com/
-
+[HTML Marker with Custom SVG Template]: https://samples.azuremaps.com/?search=HTML%20marker&sample=html-marker-with-custom-svg-template
