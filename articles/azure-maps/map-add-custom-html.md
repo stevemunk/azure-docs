@@ -68,16 +68,21 @@ For a complete working sample of how to create a custom SVG template and use it 
 -------------------------------------------------------------------->
 
 > [!TIP]
-> The Azure Maps web SDK provides several SVG image templates that can be used with HTML markers. For more information, see the [How to use image templates](how-to-use-image-templates-web-sdk.md) document.
+> The Azure Maps web SDK provides several SVG image templates that can be used with HTML markers. For more information, see the [How to use image templates] document.
 
 ## Add a CSS styled HTML marker
 
 One of the benefits of HTML markers is that there are many great customizations that can be achieved using CSS. In this sample, the content of the HtmlMarker consists of HTML and CSS that create an animated pin that drops into place and pulses.
 
-<br/>
+For a complete working sample of how to use CSS and HTML to create a marker on the map, see [CSS Styled HTML Marker] in the [Azure Maps Samples].
 
+:::image type="content" source="./media/map-add-custom-html/css-styled-html-marker.png" alt-text="Screenshot showing a map of the world with a custom SVG template used with the HtmlMarker class and a button labeled update marker options, that when selected changes the color and text options from the SVG template used in the HtmlMarker. ":::
+
+<!-------------------------------------------------------------------
 <iframe height='500' scrolling='no' title='HTML DataSource' src='//codepen.io/azuremaps/embed/qJVgMx/?height=500&theme-id=0&default-tab=js,result&embed-version=2&editable=true' frameborder='no' loading="lazy" allowtransparency='true' allowfullscreen='true'>See the Pen <a href='https://codepen.io/azuremaps/pen/qJVgMx/'>HTML DataSource</a> by Azure Maps (<a href='https://codepen.io/azuremaps'>@azuremaps</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
+-------------------------------------------------------------------->
+
 
 ## Draggable HTML markers
 
@@ -113,7 +118,7 @@ Learn more about the classes and methods used in this article:
 For more code examples to add to your maps, see the following articles:
 
 > [!div class="nextstepaction"]
-> [How to use image templates](how-to-use-image-templates-web-sdk.md)
+> [How to use image templates]
 
 > [!div class="nextstepaction"]
 > [Add a symbol layer](./map-add-pin.md)
@@ -124,3 +129,5 @@ For more code examples to add to your maps, see the following articles:
 [Simple HTML Marker]: https://samples.azuremaps.com/?search=HTML%20marker&sample=simple-html-marker
 [Azure Maps Samples]: https://samples.azuremaps.com/
 [HTML Marker with Custom SVG Template]: https://samples.azuremaps.com/?search=HTML%20marker&sample=html-marker-with-custom-svg-template
+[How to use image templates]: how-to-use-image-templates-web-sdk.md
+[CSS Styled HTML Marker]: https://samples.azuremaps.com/?search=HTML%20marker&sample=css-styled-html-marker
