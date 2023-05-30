@@ -173,7 +173,7 @@ Azure Maps QGIS Plugin logs information related to the requests made to Azure Ma
 
 You can view your log files in two ways:
 
-1. **QGIS**. You can view the Logs in QGIS by activating the **Logs Message Panel**. You'll then see:
+1. **QGIS**. You can view the Logs in QGIS by activating the **Logs Message Panel**.
 
     :::image type="content" source="./media/creator-indoor-maps/qgis/logs-message-panel.png"alt-text="A screenshot of the Logs Message Panel.":::
 
