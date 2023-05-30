@@ -219,3 +219,4 @@ TBD: What are the next steps?
 [Digitizing an existing layer]: https://docs.qgis.org/3.28/en/docs/user_manual/working_with_vector/editing_geometry_attributes.html?highlight=digitizing%20toolbar#digitizing-an-existing-layer
 [Microsoft Azure | Share your Ideas]: https://feedback.azure.com/d365community/forum/fc834083-0925-ec11-b6e6-000d3a4f09d0
 [Stack Overflow]: https://stackoverflow.com/questions/tagged/azure-maps
+ 
