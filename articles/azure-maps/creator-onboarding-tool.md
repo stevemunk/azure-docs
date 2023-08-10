@@ -15,8 +15,11 @@ services: azure-maps
 
 This article demonstrates how to create an indoor map using the Azure Maps Creator onboarding tool.
 
+## Prerequisites
 
+- Manifest created using [The Azure Maps Creator onboarding tool].
 
+## Get started
 
 :::image type="content" source="./media/creator-indoor-maps/onboarding-tool/package-upload.png" alt-text="Screenshot showing the package upload screen of the Azure Maps Creator onboarding tool.":::
 
@@ -28,13 +31,6 @@ This article demonstrates how to create an indoor map using the Azure Maps Creat
 
 :::image type="content" source="./media/creator-indoor-maps/onboarding-tool/map.png" alt-text="Screenshot showing the map screen of the Azure Maps Creator onboarding tool.":::
 
-
-
-## Prerequisites
-
-- Manifest created using [The Azure Maps Creator onboarding tool].
-
-## Get started
 
 
 [The Azure Maps Creator onboarding tool]: /azure/azure-maps/drawing-package-guide?pivots=drawing-package-v2#the-azure-maps-creator-onboarding-tool
